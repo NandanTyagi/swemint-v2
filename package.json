@@ -1,0 +1,31 @@
+{
+  "name": "swemint-v1",
+  "version": "1.0.0",
+  "description": "",
+  "source": "index.html",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "scripts": {
+    "start": "parcel",
+    "dev": "parcel index.html",
+    "build": "parcel build"
+  },
+  "devDependencies": {
+    "cssnano": "^5.1.12",
+    "parcel": "latest",
+    "postcss": "^8.4.14"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NandanTyagi/swemint-v1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NandanTyagi/swemint-v1/issues"
+  },
+  "homepage": "https://github.com/NandanTyagi/swemint-v1#readme",
+  "dependencies": {
+    "@walletconnect/web3-provider": "^1.7.8"
+  }
+}
