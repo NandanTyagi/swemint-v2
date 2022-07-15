@@ -1,4 +1,7 @@
 import shortenAddress from "./utility/shortenAddress";
+import {_serverUrl} from "./.secret.js";
+
+console.log('secret url', _serverUrl)
 const init = async () => {
   const days = document.getElementById("days");
   const hours = document.getElementById("hours");
@@ -41,6 +44,7 @@ const init = async () => {
   // Moralis
   const serverUrl = "https://fgobknghleyp.usemoralis.com:2053/server";
   const appId = "b6IxjhUZhcj7B3Y1TxRcyKGVPqICIlr4rDVVlTZ4";
+
 
   Moralis.start({ serverUrl, appId });
 

@@ -535,6 +535,8 @@ function hmrAcceptRun(bundle, id) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _shortenAddress = require("./utility/shortenAddress");
 var _shortenAddressDefault = parcelHelpers.interopDefault(_shortenAddress);
+var _secretJs = require("./.secret.js");
+console.log("secret url", (0, _secretJs._serverUrl));
 const init = async ()=>{
     const days = document.getElementById("days");
     const hours = document.getElementById("hours");
@@ -639,7 +641,7 @@ const init = async ()=>{
 };
 document.addEventListener("DOMContentLoaded", ()=>init());
 
-},{"./utility/shortenAddress":"1QPnu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1QPnu":[function(require,module,exports) {
+},{"./utility/shortenAddress":"1QPnu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./.secret.js":"8wD2a"}],"1QPnu":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "shortenAddress", ()=>shortenAddress);
@@ -682,6 +684,14 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}]},["2mNKm","6rimH"], "6rimH", "parcelRequireee82")
+},{}],"8wD2a":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "_serverUrl", ()=>_serverUrl);
+parcelHelpers.export(exports, "_appId", ()=>_appId);
+const _serverUrl = "https://fgobknghleyp.usemoralis.com:2053/server";
+const _appId = "b6IxjhUZhcj7B3Y1TxRcyKGVPqICIlr4rDVVlTZ4";
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["2mNKm","6rimH"], "6rimH", "parcelRequireee82")
 
 //# sourceMappingURL=index.8cfc62b9.js.map
