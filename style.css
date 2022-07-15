@@ -131,7 +131,7 @@ small {
 .error {
   color: red;
   font-size: 0.6rem;
-  visibility: hidden;
+  visibility: hidden ;
 }
 
 .msg {
