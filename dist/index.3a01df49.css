@@ -186,7 +186,16 @@ footer {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: .4rem;
   font-weight: 200;
+  display: flex;
+}
+
+.nav-footer {
+  min-width: 300px;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
   display: flex;
 }
 

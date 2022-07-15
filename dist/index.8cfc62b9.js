@@ -690,7 +690,21 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "_serverUrl", ()=>_serverUrl);
 parcelHelpers.export(exports, "_appId", ()=>_appId);
 const _serverUrl = "https://fgobknghleyp.usemoralis.com:2053/server";
-const _appId = "b6IxjhUZhcj7B3Y1TxRcyKGVPqICIlr4rDVVlTZ4";
+const _appId = "b6IxjhUZhcj7B3Y1TxRcyKGVPqICIlr4rDVVlTZ4"; //  export const TestContractRinkebyTxHash = "0x524949e2ff8257b1c920887e54e61def24949697545a75b8cd51aee249f72b18";
+ /************  SmartContract template **************/  // pragma solidity ^0.8.0;
+ // import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC1155/ERC1155.sol";
+ // import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
+ // contract SweMintNFTContract is ERC1155, Ownable {
+ //     uint256 public constant IPA1 = 0;
+ //     uint256 public constant IPA2 = 1; 
+ //     constructor() ERC1155("https://fgobknghleyp.usemoralis.com/{id}.json") {
+ //         _mint(msg.sender, IPA1, 3, "");
+ //         _mint(msg.sender, IPA2, 5, "");
+ //     }
+ //     function mint(address account, uint256 id, uint256 ammount) public onlyOwner {
+ //         _mint(account, id, ammount, "");
+ //     }
+ // }
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["2mNKm","6rimH"], "6rimH", "parcelRequireee82")
 
