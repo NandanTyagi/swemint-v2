@@ -34,10 +34,13 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   object-fit: cover;
-  height: fit-content;
+  height: 100%;
   color: var(--primary-font-color);
-  min-height: 100vh;
+  min-height: 100%;
   font-family: "roboto";
+  position:relative;
+  border:5px solid red 
+  overflow-x: hidden;
 }
 
 .site-container {
@@ -45,11 +48,11 @@ body {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  height: fit-content;
   min-height: 100vh;
-  padding: 0 2rem;
+  padding: 0 2rem 0.5rem 2rem;
   position: relative;
   width: 100vw;
-  overflow-x: hidden;
 }
 
 .overlay-container {
@@ -69,6 +72,7 @@ article {
   justify-content: center;
   align-items: center;
   padding-bottom: 1rem;
+  width:100%;
 }
 
 #countdown {

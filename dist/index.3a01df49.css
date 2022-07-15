@@ -30,26 +30,28 @@
 
 body {
   object-fit: cover;
-  height: fit-content;
+  height: 100%;
   color: var(--primary-font-color);
-  min-height: 100vh;
+  min-height: 100%;
+  border: 5px solid red overflow-x: hidden;
   background-image: url("bg-1-mobile.baf9f032.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   font-family: roboto;
+  position: relative;
 }
 
 .site-container {
+  height: fit-content;
   min-height: 100vh;
   width: 100vw;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 0 2rem;
+  padding: 0 2rem .5rem;
   display: flex;
   position: relative;
-  overflow-x: hidden;
 }
 
 .overlay-container {
@@ -61,6 +63,7 @@ body {
 }
 
 article {
+  width: 100%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
