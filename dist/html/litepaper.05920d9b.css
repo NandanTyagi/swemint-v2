@@ -44,16 +44,18 @@ body {
 }
 
 footer {
-  height: 80px;
+  height: 50px;
+  width: 100% text-align: left;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 2rem;
+  font-size: 1.6rem;
   display: flex;
 }
 
 footer a {
   color: #000;
+  width: 94%;
   text-decoration: none;
 }
 
