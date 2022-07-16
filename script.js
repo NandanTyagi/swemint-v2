@@ -1,13 +1,13 @@
-import shortenAddress from "./utility/shortenAddress";
-import {_serverUrl} from "./.secret.js";
 
-console.log('secret url', _serverUrl)
+import shortenAddress from "./utility/shortenAddress";
+
 const init = async () => {
+  const countdown = document.getElementById("countdown");
+  if(!countdown) return
   const days = document.getElementById("days");
   const hours = document.getElementById("hours");
   const minutes = document.getElementById("minutes");
   const seconds = document.getElementById("seconds");
-  const countdown = document.getElementById("countdown");
   const loading = document.getElementById("loading");
   const btn = document.getElementById("btn");
   const err = document.getElementById("error");
