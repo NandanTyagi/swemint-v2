@@ -3,3 +3,9 @@ node_modules
 .cache
 
 .parcel-cache
+
+.secret.js
+
+dist
+
+html
