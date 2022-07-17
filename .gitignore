@@ -6,6 +6,6 @@ node_modules
 
 .secret.js
 
-dist
+dist/
 
-html
+html/
