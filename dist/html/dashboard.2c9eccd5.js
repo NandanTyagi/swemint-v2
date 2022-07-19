@@ -142,14 +142,14 @@
       this[globalName] = mainExports;
     }
   }
-})({"2mNKm":[function(require,module,exports) {
+})({"65vpK":[function(require,module,exports) {
 "use strict";
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "d6ea1d42532a7575";
-module.bundle.HMR_BUNDLE_ID = "b3c595598cfc62b9";
+module.bundle.HMR_BUNDLE_ID = "faa3ed292c9eccd5";
 /* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, chrome, browser, globalThis, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
 import type {
   HMRAsset,
@@ -531,131 +531,166 @@ function hmrAcceptRun(bundle, id) {
     acceptedAssets[id] = true;
 }
 
-},{}],"6rimH":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-var _shortenAddress = require("./utility/shortenAddress");
-var _shortenAddressDefault = parcelHelpers.interopDefault(_shortenAddress);
-const init = async ()=>{
-    const countdown = document.getElementById("countdown");
-    if (!countdown) return;
-    const days = document.getElementById("days");
-    const hours = document.getElementById("hours");
-    const minutes = document.getElementById("minutes");
-    const seconds = document.getElementById("seconds");
-    const loading = document.getElementById("loading");
-    const btn = document.getElementById("btn");
-    const err = document.getElementById("error");
-    const msg = document.getElementById("msg");
-    const currentYear = new Date().getFullYear();
-    const mintDeadLine = new Date(`August 20 ${currentYear} 18:00:00`);
-    // Update time countdown
-    function updateCountdown() {
-        const currentTime = new Date();
-        const diff = mintDeadLine - currentTime;
-        const d = Math.floor(diff / 1000 / 60 / 60 / 24);
-        const h = Math.floor(diff / 1000 / 60 / 60) % 24;
-        const m = Math.floor(diff / 1000 / 60) % 60;
-        const s = Math.floor(diff / 1000) % 60;
-        // Add values to DOM
-        days.innerHTML = d + ":";
-        hours.innerHTML = h < 10 ? "0" + h + ":" : h + ":";
-        minutes.innerHTML = m < 10 ? "0" + m + ":" : m + ":";
-        seconds.innerHTML = s < 10 ? "0" + s : s;
-    }
-    //Show spinner before countdown
-    setTimeout(()=>{
-        loading.remove();
-    }, 1000);
-    // Run every second
-    setInterval(updateCountdown, 1000);
-    // Moralis
-    // const serverUrl = "https://fgobknghleyp.usemoralis.com:2053/server";
-    // const appId = "b6IxjhUZhcj7B3Y1TxRcyKGVPqICIlr4rDVVlTZ4";
-    const serverUrl = "https://zjaux8t7jfje.usemoralis.com:2053/server";
-    const appId = "dsGPCxn9M5fRH1VVOysTr2Z5dtdLwxq4XOmMbkZH";
-    const contractAddress = "0x7AEdebd30538116668e006a9572386F288647cCC";
-    const chain = "rinkeby";
+},{}],"cdWvR":[function(require,module,exports) {
+// import { appId, serverUrl } from "../.secret";
+var _ratelimit = require("../scripts/ratelimit");
+const serverUrl = "https://zjaux8t7jfje.usemoralis.com:2053/server";
+const appId = "dsGPCxn9M5fRH1VVOysTr2Z5dtdLwxq4XOmMbkZH";
+const contractAddress = "0x7AEdebd30538116668e006a9572386F288647cCC";
+const chain = "rinkeby";
+async function loginMetamask() {
+    console.log("In Dashboard");
+    // Rinkeby testnet server on Moralis
     Moralis.start({
         serverUrl,
         appId
     });
-    let user1 = Moralis.User.current();
-    if (user1) {
-        console.log("logged in user: ", user1);
-        btn.innerText = "Disconnect wallet";
+    let currentUser = Moralis.User.current();
+    let currentAddress = currentUser.get("ethAddress");
+    console.log("CurrentEth Address", currentAddress);
+    if (!currentUser) currentUser = await Moralis.Web3.authenticate();
+    const options = {
+        address: contractAddress,
+        chain: chain
+    };
+    let NFTs = await Moralis.Web3API.token.getAllTokenIds(options);
+    console.log("nfts", NFTs);
+    let owners = await (0, _ratelimit.getAllOwners)();
+    console.log("Got token owners", owners);
+    console.log("Current user", currentUser);
+    let nftMetadata = await fetchNftMetadata(await NFTs.result, await owners, currentAddress);
+    console.log("nfts metadata", nftMetadata);
+    renderInventory(await NFTs);
+}
+document.addEventListener("DOMContentLoaded", ()=>loginMetamask());
+//Get metadata for one token. Ex: USDT token on ETH
+function fetchNftMetadata(nfts, owners, userAddress) {
+    let promises = [];
+    for(let i = 0; i < nfts.length; i++){
+        let nft = nfts[i];
+        let nftId = nft.token_id;
+        let owner = owners[i];
+        // Call moralis cloud function
+        promises.push(fetch(getcloudFunctionUrl(nftId)).then((res)=>res.json()).then((res)=>JSON.parse(res.result)).then((res)=>nft.metadata = res).then((res)=>{
+            nft.owners = [];
+            if (owner.token_id === nft.token_id) {
+                nft.owners.push(owner.owner_of);
+                console.log("Owner", owners[i]);
+                console.log("NFTI", nft);
+            }
+            return res;
+        }));
     }
-    async function loginMetamask(user2) {
-        console.log("logged in user:", user2);
-        // err.style.visibility = "hidden";
-        if (!user2) user2 = await Moralis.authenticate({
-            signingMessage: "Log in using Moralis"
-        }).then(function(user) {
-            console.log("logged in user:", user);
-            console.log(user.get("ethAddress"));
-            let address = user.get("ethAddress");
-            msg.innerHTML = (0, _shortenAddressDefault.default)(address);
-            msg.style.visibility = "visible";
-            btn.innerText = "Disconnect wallet";
-        }).catch(function(error) {
-            console.log(error);
-            err.style.visibility = "visible";
-            err.innerHTML = error.message;
-            setTimeout(()=>{
-                err.style.visibility = "hidden";
-            }, 10000);
-        });
+    return Promise.all(promises);
+}
+const getcloudFunctionUrl = (nftId)=>`${serverUrl}/functions/getNFT?_ApplicationId=${appId}&nftId=${nftId}`;
+async function renderInventory(nfts) {
+    const parent = document.getElementById("app");
+    console.log("wwwwwwwwwwwwwwwwwwww", nfts);
+    for(let i = 0; i < nfts.total; i++){
+        const nft = await nfts.result[i];
+        console.log("QQQQQQQQQQQQQQQQQQQQQQQ", nft.metadata.attributes);
+        let attr = nft.metadata.attributes;
+        console.log("aaaaaaaaaaaaaaaaaaaa", attr);
+        let parsedAttr = Array.from(attr).join("").split(",");
+        console.log("bbbbbbbbbbbbbbbbbb", parsedAttr);
+        parsedAttr = [
+            parsedAttr[0].replace("[", ""),
+            ...parsedAttr
+        ];
+        parsedAttr1 = [
+            parsedAttr[parsedAttr.length - 1].replace("]", "")
+        ];
+        parsedAttr.pop();
+        parsedAttr.push(parsedAttr1[0]);
+        parsedAttr2 = parsedAttr.forEach((el)=>el.replace('"', ""));
+        // parsedAttr = parsedAttr[4]
+        console.log("bbbbbbbbbbbbbbbbbboooooooooooo", parsedAttr);
+        let left = parsedAttr.splice(1, 1);
+        console.log("bbbbbbbbbbbbbbbbbboooooooooooo", parsedAttr);
+        console.log("bbbbbbbbbbbbbbbbbb------------", parsedAttr2);
+        let obj = {
+            ...[
+                parsedAttr
+            ]
+        };
+        console.log("bbbbbbbbbbbbbbbbbb------------", obj);
+        let htmlString = `
+    <div class="card">
+      <img src="${nft.metadata.image}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">${nft.metadata.name}</h5>
+        <p class="card-text">${nft.metadata.description}</p>
+        <p class="card-text">Token ID: ${nft.token_id}</p>
+        <p class="card-text">Tokensupply: ${nft.amount}</p>
+        <p class="card-text">Owned by you: ${nft.owners[0] ? "Yes" : "No"}</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+    `;
+        let col = document.createElement("div");
+        col.classname = "col col-md-4";
+        col.innerHTML = htmlString;
+        parent.appendChild(col);
     }
-    async function loginWalletConnect() {
-        err.innerHTML = "";
-        let user4 = Moralis.User.current();
-        if (!user4) {
-            const user3 = await Moralis.authenticate({
-                provider: "walletconnect",
-                mobileLinks: [
-                    "rainbow",
-                    "metamask",
-                    "argent",
-                    "trust", 
-                ],
-                signingMessage: "Log in using Moralis"
-            }).then(function(user) {
-                console.log("logged in user:", user);
-                console.log(user.get("ethAddress"));
-            }).catch(function(error) {
-                console.log(error);
-                err.innerHTML = error.message;
-            });
-        }
-    }
-    async function logOut() {
-        await Moralis.User.logOut();
-        console.log("logged out");
-        btn.innerText = "Connect wallet";
-        msg.innerText = "Disconnected";
-        setTimeout(()=>{
-            msg.style.visibility = "hidden";
-        }, 3000);
-    }
-    function connectionCheck() {
-        if (btn.innerText === "CONNECT WALLET") loginMetamask();
-        if (btn.innerText === "DISCONNECT WALLET") logOut();
-    }
-    btn.addEventListener("pointerup", ()=>connectionCheck());
-};
-document.addEventListener("DOMContentLoaded", ()=>init());
+}
 
-},{"./utility/shortenAddress":"1QPnu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1QPnu":[function(require,module,exports) {
+},{"../scripts/ratelimit":"hrHuP"}],"hrHuP":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "shortenAddress", ()=>shortenAddress);
-const shortenAddress = (longAddress)=>{
-    let firstPart = longAddress.substring(0, 5);
-    let lastPart = longAddress.substring(longAddress.length - 5, longAddress.length);
-    let result = `${firstPart}...${lastPart}`;
-    console.log("in shorten address", result);
-    return `Connected wallet: ${result}`;
-};
-exports.default = shortenAddress;
+parcelHelpers.export(exports, "getAllOwners", ()=>getAllOwners);
+async function getAllOwners(token_id) {
+    const serverUrl = "https://zjaux8t7jfje.usemoralis.com:2053/server";
+    const appId = "dsGPCxn9M5fRH1VVOysTr2Z5dtdLwxq4XOmMbkZH";
+    const contractAddress = "0x7AEdebd30538116668e006a9572386F288647cCC";
+    const chain = "rinkeby";
+    await Moralis.start({
+        serverUrl,
+        appId
+    });
+    let cursor = null;
+    let owners = {};
+    do {
+        const response = await Moralis.Web3API.token.getNFTOwners({
+            address: contractAddress,
+            chain: chain,
+            limit: 25,
+            cursor: cursor
+        });
+        console.log(`Response:`, response);
+        cursor = response.cursor;
+        return response.result;
+    }while (cursor != "" && cursor != null);
+}
+exports.default = getAllOwners; // async function getAllOwners() {
+ //   await Moralis.start({serverUrl, appId });
+ //   let cursor = null;
+ //   let owners = {};
+ //   do {
+ //     const response = await Moralis.Web3API.token.getNFTOwners({
+ //       address: contractAddress,
+ //       chain: chain,
+ //       limit: 90,
+ //       cursor: cursor,
+ //     });
+ //     console.log(
+ //       `Got page ${response.page} of ${Math.ceil(
+ //         response.total / response.page_size
+ //       )}, ${response.total} total. Response:`, response
+ //     );
+ //     for (const owner of response.result) {
+ //       owners[owner.owner_of] = {
+ //         amount: owner.amount,
+ //         owner: owner.owner_of,
+ //         tokenId: owner.token_id,
+ //         tokenAddress: owner.token_address,
+ //       };
+ //     }
+ //     cursor = response.cursor;
+ //   } while (cursor != "" && cursor != null);
+ //   console.log("owners:", owners, "total owners:", Object.keys(owners).length);
+ // }
+ // getAllOwners();
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -687,6 +722,6 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}]},["2mNKm","6rimH"], "6rimH", "parcelRequireee82")
+},{}]},["65vpK","cdWvR"], "cdWvR", "parcelRequireee82")
 
-//# sourceMappingURL=index.8cfc62b9.js.map
+//# sourceMappingURL=dashboard.2c9eccd5.js.map

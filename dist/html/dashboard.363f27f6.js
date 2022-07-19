@@ -142,14 +142,14 @@
       this[globalName] = mainExports;
     }
   }
-})({"2mNKm":[function(require,module,exports) {
+})({"9Fj6E":[function(require,module,exports) {
 "use strict";
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "d6ea1d42532a7575";
-module.bundle.HMR_BUNDLE_ID = "b3c595598cfc62b9";
+module.bundle.HMR_BUNDLE_ID = "f0368b6f363f27f6";
 /* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, chrome, browser, globalThis, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
 import type {
   HMRAsset,
@@ -531,131 +531,63 @@ function hmrAcceptRun(bundle, id) {
     acceptedAssets[id] = true;
 }
 
-},{}],"6rimH":[function(require,module,exports) {
+},{}],"hrHuP":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-var _shortenAddress = require("./utility/shortenAddress");
-var _shortenAddressDefault = parcelHelpers.interopDefault(_shortenAddress);
-const init = async ()=>{
-    const countdown = document.getElementById("countdown");
-    if (!countdown) return;
-    const days = document.getElementById("days");
-    const hours = document.getElementById("hours");
-    const minutes = document.getElementById("minutes");
-    const seconds = document.getElementById("seconds");
-    const loading = document.getElementById("loading");
-    const btn = document.getElementById("btn");
-    const err = document.getElementById("error");
-    const msg = document.getElementById("msg");
-    const currentYear = new Date().getFullYear();
-    const mintDeadLine = new Date(`August 20 ${currentYear} 18:00:00`);
-    // Update time countdown
-    function updateCountdown() {
-        const currentTime = new Date();
-        const diff = mintDeadLine - currentTime;
-        const d = Math.floor(diff / 1000 / 60 / 60 / 24);
-        const h = Math.floor(diff / 1000 / 60 / 60) % 24;
-        const m = Math.floor(diff / 1000 / 60) % 60;
-        const s = Math.floor(diff / 1000) % 60;
-        // Add values to DOM
-        days.innerHTML = d + ":";
-        hours.innerHTML = h < 10 ? "0" + h + ":" : h + ":";
-        minutes.innerHTML = m < 10 ? "0" + m + ":" : m + ":";
-        seconds.innerHTML = s < 10 ? "0" + s : s;
-    }
-    //Show spinner before countdown
-    setTimeout(()=>{
-        loading.remove();
-    }, 1000);
-    // Run every second
-    setInterval(updateCountdown, 1000);
-    // Moralis
-    // const serverUrl = "https://fgobknghleyp.usemoralis.com:2053/server";
-    // const appId = "b6IxjhUZhcj7B3Y1TxRcyKGVPqICIlr4rDVVlTZ4";
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getAllOwners", ()=>getAllOwners);
+async function getAllOwners(token_id) {
     const serverUrl = "https://zjaux8t7jfje.usemoralis.com:2053/server";
     const appId = "dsGPCxn9M5fRH1VVOysTr2Z5dtdLwxq4XOmMbkZH";
-    const contractAddress = "0x7AEdebd30538116668e006a9572386F288647cCC";
+    const contractAddress = "0x5ef7359319a186004277c613147ecfcda4ed8c90";
     const chain = "rinkeby";
-    Moralis.start({
+    await Moralis.start({
         serverUrl,
         appId
     });
-    let user1 = Moralis.User.current();
-    if (user1) {
-        console.log("logged in user: ", user1);
-        btn.innerText = "Disconnect wallet";
-    }
-    async function loginMetamask(user2) {
-        console.log("logged in user:", user2);
-        // err.style.visibility = "hidden";
-        if (!user2) user2 = await Moralis.authenticate({
-            signingMessage: "Log in using Moralis"
-        }).then(function(user) {
-            console.log("logged in user:", user);
-            console.log(user.get("ethAddress"));
-            let address = user.get("ethAddress");
-            msg.innerHTML = (0, _shortenAddressDefault.default)(address);
-            msg.style.visibility = "visible";
-            btn.innerText = "Disconnect wallet";
-        }).catch(function(error) {
-            console.log(error);
-            err.style.visibility = "visible";
-            err.innerHTML = error.message;
-            setTimeout(()=>{
-                err.style.visibility = "hidden";
-            }, 10000);
+    let cursor = null;
+    let owners = {};
+    do {
+        const response = await Moralis.Web3API.token.getTokenIdOwners({
+            address: contractAddress,
+            chain: chain,
+            limit: 25,
+            tiken_id: token_id,
+            cursor: cursor
         });
-    }
-    async function loginWalletConnect() {
-        err.innerHTML = "";
-        let user4 = Moralis.User.current();
-        if (!user4) {
-            const user3 = await Moralis.authenticate({
-                provider: "walletconnect",
-                mobileLinks: [
-                    "rainbow",
-                    "metamask",
-                    "argent",
-                    "trust", 
-                ],
-                signingMessage: "Log in using Moralis"
-            }).then(function(user) {
-                console.log("logged in user:", user);
-                console.log(user.get("ethAddress"));
-            }).catch(function(error) {
-                console.log(error);
-                err.innerHTML = error.message;
-            });
-        }
-    }
-    async function logOut() {
-        await Moralis.User.logOut();
-        console.log("logged out");
-        btn.innerText = "Connect wallet";
-        msg.innerText = "Disconnected";
-        setTimeout(()=>{
-            msg.style.visibility = "hidden";
-        }, 3000);
-    }
-    function connectionCheck() {
-        if (btn.innerText === "CONNECT WALLET") loginMetamask();
-        if (btn.innerText === "DISCONNECT WALLET") logOut();
-    }
-    btn.addEventListener("pointerup", ()=>connectionCheck());
-};
-document.addEventListener("DOMContentLoaded", ()=>init());
-
-},{"./utility/shortenAddress":"1QPnu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1QPnu":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "shortenAddress", ()=>shortenAddress);
-const shortenAddress = (longAddress)=>{
-    let firstPart = longAddress.substring(0, 5);
-    let lastPart = longAddress.substring(longAddress.length - 5, longAddress.length);
-    let result = `${firstPart}...${lastPart}`;
-    console.log("in shorten address", result);
-    return `Connected wallet: ${result}`;
-};
-exports.default = shortenAddress;
+        console.log(`Got page ${response.page} of ${Math.ceil(response.total / response.page_size)}, ${response.total} total. Response:`, response);
+        cursor = response.cursor;
+        return response.result;
+    }while (cursor != "" && cursor != null);
+}
+exports.default = getAllOwners; // async function getAllOwners() {
+ //   await Moralis.start({serverUrl, appId });
+ //   let cursor = null;
+ //   let owners = {};
+ //   do {
+ //     const response = await Moralis.Web3API.token.getNFTOwners({
+ //       address: contractAddress,
+ //       chain: chain,
+ //       limit: 90,
+ //       cursor: cursor,
+ //     });
+ //     console.log(
+ //       `Got page ${response.page} of ${Math.ceil(
+ //         response.total / response.page_size
+ //       )}, ${response.total} total. Response:`, response
+ //     );
+ //     for (const owner of response.result) {
+ //       owners[owner.owner_of] = {
+ //         amount: owner.amount,
+ //         owner: owner.owner_of,
+ //         tokenId: owner.token_id,
+ //         tokenAddress: owner.token_address,
+ //       };
+ //     }
+ //     cursor = response.cursor;
+ //   } while (cursor != "" && cursor != null);
+ //   console.log("owners:", owners, "total owners:", Object.keys(owners).length);
+ // }
+ // getAllOwners();
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -687,6 +619,6 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}]},["2mNKm","6rimH"], "6rimH", "parcelRequireee82")
+},{}]},["9Fj6E","hrHuP"], "hrHuP", "parcelRequireee82")
 
-//# sourceMappingURL=index.8cfc62b9.js.map
+//# sourceMappingURL=dashboard.363f27f6.js.map
