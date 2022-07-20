@@ -13,10 +13,10 @@ export async function getAllOwners(token_id) {
       limit: 25,
       cursor: cursor,
     });
-    console.log(
-      `Response:`,
-      response
-    );
+    // console.log(
+    //   `Response:`,
+    //   response
+    // );
     cursor = response.cursor;
 
     return response.result;

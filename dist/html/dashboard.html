@@ -15,11 +15,148 @@
   <body>
     <div class="jumbotron jumbotron-fluid">
       <div class="container">
-        <h1 class="display-4">Welcome</h1>
+        <h1 class="display-4">Dashboard</h1>
       </div>
     </div>
     <div class="container">
-        <div class="row" id="app"></div>
+      <div class="row" id="app">
+        <div class="col col-md-4">
+          <div class="card">
+            <img src="/ipa1.f5a852e0.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">${nft.metadata.name}</h5>
+              <p class="card-text">${nft.metadata.description}</p>
+              <p class="card-text">Token ID: ${nft.token_id}</p>
+              <p class="card-text">Tokensupply: ${nft.amount}</p>
+              <p class="card-text">Holders: ${await nft.owners.length}</p>
+              <p class="card-text">
+                Held by you: ${await getOwnedAmount(nft, curAddr)}
+              </p>
+              <a href="https://testnets.opensea.io/assets/rinkeby/${contractAddress}/${nft.token_id}" class="btn btn-primary">View on Opensea</a>
+              <a href="/html/mint.html" class="btn btn-primary">Mint</a>
+            </div>
+          </div>
+        </div>
+        <div class="col col-md-4">
+          <div class="card">
+            <img src="/ipa2.3b19bd2b.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">${nft.metadata.name}</h5>
+              <p class="card-text">${nft.metadata.description}</p>
+              <p class="card-text">Token ID: ${nft.token_id}</p>
+              <p class="card-text">Tokensupply: ${nft.amount}</p>
+              <p class="card-text">Holders: ${await nft.owners.length}</p>
+              <p class="card-text">
+                Held by you: ${await getOwnedAmount(nft, curAddr)}
+              </p>
+              <a href="https://testnets.opensea.io/assets/rinkeby/${contractAddress}/${nft.token_id}" class="btn btn-primary">View on Opensea</a>
+              <a href="/html/mint.html" class="btn btn-primary">Mint</a>
+            </div>
+          </div>
+        </div>
+        <div class="col col-md-4">
+          <div class="card">
+            <img src="/ipa3.88744816.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">${nft.metadata.name}</h5>
+              <p class="card-text">${nft.metadata.description}</p>
+              <p class="card-text">Token ID: ${nft.token_id}</p>
+              <p class="card-text">Tokensupply: ${nft.amount}</p>
+              <p class="card-text">Holders: ${await nft.owners.length}</p>
+              <p class="card-text">
+                Held by you: ${await getOwnedAmount(nft, curAddr)}
+              </p>
+              <a href="https://testnets.opensea.io/assets/rinkeby/${contractAddress}/${nft.token_id}" class="btn btn-primary">View on Opensea</a>
+              <a href="/html/mint.html" class="btn btn-primary">Mint</a>
+            </div>
+          </div>
+        </div>
+        <div class="col col-md-4">
+          <div class="card">
+            <img src="/ipa4.fd935b0b.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">${nft.metadata.name}</h5>
+              <p class="card-text">${nft.metadata.description}</p>
+              <p class="card-text">Token ID: ${nft.token_id}</p>
+              <p class="card-text">Tokensupply: ${nft.amount}</p>
+              <p class="card-text">Holders: ${await nft.owners.length}</p>
+              <p class="card-text">
+                Held by you: ${await getOwnedAmount(nft, curAddr)}
+              </p>
+              <a href="https://testnets.opensea.io/assets/rinkeby/${contractAddress}/${nft.token_id}" class="btn btn-primary">View on Opensea</a>
+              <a href="/html/mint.html" class="btn btn-primary">Mint</a>
+            </div>
+          </div>
+        </div>
+        <div class="col col-md-4">
+          <div class="card">
+            <img src="/ipa5.ca4481f1.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">${nft.metadata.name}</h5>
+              <p class="card-text">${nft.metadata.description}</p>
+              <p class="card-text">Token ID: ${nft.token_id}</p>
+              <p class="card-text">Tokensupply: ${nft.amount}</p>
+              <p class="card-text">Holders: ${await nft.owners.length}</p>
+              <p class="card-text">
+                Held by you: ${await getOwnedAmount(nft, curAddr)}
+              </p>
+              <a href="https://testnets.opensea.io/assets/rinkeby/${contractAddress}/${nft.token_id}" class="btn btn-primary">View on Opensea</a>
+              <a href="/html/mint.html" class="btn btn-primary">Mint</a>
+            </div>
+          </div>
+        </div>
+        <div class="col col-md-4">
+          <div class="card">
+            <img src="/ipa6.4f3fb837.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">${nft.metadata.name}</h5>
+              <p class="card-text">${nft.metadata.description}</p>
+              <p class="card-text">Token ID: ${nft.token_id}</p>
+              <p class="card-text">Tokensupply: ${nft.amount}</p>
+              <p class="card-text">Holders: ${await nft.owners.length}</p>
+              <p class="card-text">
+                Held by you: ${await getOwnedAmount(nft, curAddr)}
+              </p>
+              <a href="https://testnets.opensea.io/assets/rinkeby/${contractAddress}/${nft.token_id}" class="btn btn-primary">View on Opensea</a>
+              <a href="/html/mint.html" class="btn btn-primary">Mint</a>
+            </div>
+          </div>
+        </div>
+        <div class="col col-md-4">
+          <div class="card">
+            <img src="/ipa7.9a7adf8a.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">${nft.metadata.name}</h5>
+              <p class="card-text">${nft.metadata.description}</p>
+              <p class="card-text">Token ID: ${nft.token_id}</p>
+              <p class="card-text">Tokensupply: ${nft.amount}</p>
+              <p class="card-text">Holders: ${await nft.owners.length}</p>
+              <p class="card-text">
+                Held by you: ${await getOwnedAmount(nft, curAddr)}
+              </p>
+              <a href="https://testnets.opensea.io/assets/rinkeby/${contractAddress}/${nft.token_id}" class="btn btn-primary">View on Opensea</a>
+              <a href="/html/mint.html" class="btn btn-primary">Mint</a>
+            </div>
+          </div>
+        </div>
+        <div class="col col-md-4">
+          <div class="card">
+            <img src="/ipa8.b62f15eb.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">${nft.metadata.name}</h5>
+              <p class="card-text">${nft.metadata.description}</p>
+              <p class="card-text">Token ID: ${nft.token_id}</p>
+              <p class="card-text">Tokensupply: ${nft.amount}</p>
+              <p class="card-text">Holders: ${await nft.owners.length}</p>
+              <p class="card-text">
+                Held by you: ${await getOwnedAmount(nft, curAddr)}
+              </p>
+              <a href="https://testnets.opensea.io/assets/rinkeby/${contractAddress}/${nft.token_id}" class="btn btn-primary">View on Opensea</a>
+              <a href="/html/mint.html" class="btn btn-primary">Mint</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="/html/dashboard.2c9eccd5.js" defer=""></script>
