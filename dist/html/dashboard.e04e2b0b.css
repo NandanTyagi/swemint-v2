@@ -1,3 +1,114 @@
+@import "https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700;1,900&display=swap";
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
+@font-face {
+  font-family: digital-7;
+  src: url("../digital-7.a1858843.ttf");
+}
+
+@font-face {
+  font-family: iknu;
+  src: url("../iknu.normal.857c82c3.ttf");
+}
+
+:root {
+  --primary-font-color: #fff;
+  --secondary-font-color: #74fcfd;
+  --title-font-size: 8rem;
+  --preamble-font-size: .8rem;
+  --footer-font-size: .5rem;
+  --footer-font-size-md: .6rem;
+  --button-font-size: 1rem;
+  --counter-font-size: 2rem;
+  --description-font-size: .8rem;
+  --font: "roboto" sanserif;
+}
+
+body {
+  height: 100vh;
+  color: var(--primary-font-color);
+  border: 5px solid red overflow-x: hidden;
+  font-family: roboto;
+  position: relative;
+  overflow-y: auto;
+}
+
+.overlay-container {
+  opacity: .6;
+  z-index: -1;
+  background: #000;
+  position: fixed;
+  inset: 0;
+}
+
+.bg-container {
+  object-fit: cover;
+  z-index: -1;
+  background-image: url("../bg-1-mobile.baf9f032.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: fixed;
+  inset: 0;
+}
+
+.site-container {
+  height: fit-content;
+  min-height: 100vh;
+  width: 100vw;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem .5rem;
+  display: flex;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.jumbotron, .card {
+  background-color: #0000;
+}
+
+.card {
+  border: 1px solid #fff;
+  margin-bottom: 2rem;
+}
+
+footer {
+  font-size: var(--footer-font-size);
+  height: fit-content;
+  text-align: center;
+  letter-spacing: .09rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: .4rem;
+  font-weight: 200;
+  display: flex;
+}
+
+.nav-footer {
+  min-width: 320px;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  display: flex;
+}
+
+.link {
+  color: var(--primary-font-color);
+  text-decoration: none;
+}
+
+.link.blue {
+  color: #1e90ff;
+  padding-bottom: .5rem;
+  font-weight: 500;
+}
 
 /*# sourceMappingURL=dashboard.e04e2b0b.css.map */

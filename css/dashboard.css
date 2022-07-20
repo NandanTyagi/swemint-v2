@@ -1,0 +1,119 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: "digital-7";
+  src: url("../fonts/digital-7.ttf");
+}
+@font-face {
+  font-family: "iknu";
+  src: url("../fonts/iknu.normal.ttf");
+}
+
+:root {
+  --primary-font-color: #fff;
+  --secondary-font-color: #74fcfd;
+  --title-font-size: 8rem;
+  --preamble-font-size: 0.8rem;
+  --footer-font-size: 0.5rem;
+  --footer-font-size-md: 0.6rem;
+  --button-font-size: 1rem;
+  --counter-font-size: 2rem;
+  --description-font-size: 0.8rem;
+  --font: "roboto" sanserif;
+}
+
+body {
+    height: 100vh;
+    color: var(--primary-font-color);
+    font-family: "roboto";
+    position:relative;
+    border:5px solid red 
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .overlay-container {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: black;
+    opacity: 0.6;
+    z-index: -1;
+}
+
+.bg-container{
+    background-image: url("/img/bg-1-mobile.png");
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    position:fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+  }
+
+  .site-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: fit-content;
+    min-height: 100vh;
+    padding: 0 2rem 0.5rem 2rem;
+    position: relative;
+    width: 100vw;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+
+  .jumbotron, .card {
+    background-color: transparent;
+  }
+
+  .card {
+    margin-bottom: 2rem;
+    border: 1px solid white; 
+  }
+
+  footer {
+    font-size: var(--footer-font-size);
+    height: fit-content;
+    text-align: center;
+    letter-spacing: 0.09rem;
+    font-weight: 200;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  
+  .nav-footer {
+    min-width: 320px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  
+  .link {
+    color: var(--primary-font-color);
+    text-decoration: none;
+  }
+  
+  .link.blue {
+    color: dodgerblue;
+    font-weight: 500;
+    padding-bottom: 0.5rem
+  }
