@@ -581,8 +581,8 @@ const init = async ()=>{
         appId
     });
     let user1 = await Moralis.User.current();
-    const connectedWallet = user1.get("ethAddress");
-    if (user1 && connectedWallet !== null) {
+    if (user1) {
+        const connectedWallet = user1.get("ethAddress");
         console.log("logged in user: ", connectedWallet);
         btn.innerText = "Disconnect wallet";
     }

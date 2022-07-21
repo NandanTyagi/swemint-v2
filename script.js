@@ -53,9 +53,9 @@ const chain = "rinkeby";
   Moralis.start({ serverUrl, appId });
 
   let user = await Moralis.User.current();
-  const connectedWallet = user.get('ethAddress')
-
-  if (user && connectedWallet !== null) {
+  
+  if (user) {
+    const connectedWallet =  user.get('ethAddress')
     console.log("logged in user: ", connectedWallet);
     btn.innerText = "Disconnect wallet";
   }
