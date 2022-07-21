@@ -536,6 +536,7 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _shortenAddress = require("./utility/shortenAddress");
 var _shortenAddressDefault = parcelHelpers.interopDefault(_shortenAddress);
 const init = async ()=>{
+    console.log("Window Eth", window.ethereum.selectedAddress);
     const countdown = document.getElementById("countdown");
     if (!countdown) return;
     const days = document.getElementById("days");
@@ -579,16 +580,17 @@ const init = async ()=>{
         serverUrl,
         appId
     });
-    let user1 = Moralis.User.current();
-    if (user1) {
-        console.log("logged in user: ", user1);
+    let user1 = await Moralis.User.current();
+    const connectedWallet = user1.get("ethAddress");
+    if (user1 && connectedWallet !== null) {
+        console.log("logged in user: ", connectedWallet);
         btn.innerText = "Disconnect wallet";
     }
     async function loginMetamask(user2) {
         console.log("logged in user:", user2);
         // err.style.visibility = "hidden";
         if (!user2) user2 = await Moralis.authenticate({
-            signingMessage: "Log in using Moralis"
+            signingMessage: "Log in to Swemint.io"
         }).then(function(user) {
             console.log("logged in user:", user);
             console.log(user.get("ethAddress"));
@@ -605,28 +607,6 @@ const init = async ()=>{
             }, 10000);
         });
     }
-    async function loginWalletConnect() {
-        err.innerHTML = "";
-        let user4 = Moralis.User.current();
-        if (!user4) {
-            const user3 = await Moralis.authenticate({
-                provider: "walletconnect",
-                mobileLinks: [
-                    "rainbow",
-                    "metamask",
-                    "argent",
-                    "trust", 
-                ],
-                signingMessage: "Log in using Moralis"
-            }).then(function(user) {
-                console.log("logged in user:", user);
-                console.log(user.get("ethAddress"));
-            }).catch(function(error) {
-                console.log(error);
-                err.innerHTML = error.message;
-            });
-        }
-    }
     async function logOut() {
         await Moralis.User.logOut();
         console.log("logged out");
@@ -640,20 +620,56 @@ const init = async ()=>{
         if (btn.innerText === "CONNECT WALLET") loginMetamask();
         if (btn.innerText === "DISCONNECT WALLET") logOut();
     }
+    function showConnectedWallet() {
+        if (user1 !== null && user1 !== undefined) {
+            msg.innerText = (0, _shortenAddressDefault.default)(user1.get("ethAddress"));
+            msg.style.visibility = "visible";
+        }
+    }
+    showConnectedWallet();
     btn.addEventListener("pointerup", ()=>connectionCheck());
 };
-document.addEventListener("DOMContentLoaded", ()=>init());
+document.addEventListener("DOMContentLoaded", ()=>init()); // async function loginWalletConnect() {
+ //   err.innerHTML = "";
+ //   let user = Moralis.User.current();
+ //   if (!user) {
+ //     const user = await Moralis.authenticate({
+ //       provider: "walletconnect",
+ //       mobileLinks: [
+ //         "rainbow",
+ //         "metamask",
+ //         "argent",
+ //         "trust",
+ //         // "imtoken",
+ //         // "pillar",
+ //       ],
+ //       signingMessage: "Log in using Moralis",
+ //     })
+ //       .then(function (user) {
+ //         console.log("logged in user:", user);
+ //         console.log(user.get("ethAddress"));
+ //       })
+ //       .catch(function (error) {
+ //         console.log(error);
+ //         err.innerHTML = error.message;
+ //       });
+ //   }
+ // }
 
 },{"./utility/shortenAddress":"1QPnu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1QPnu":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "shortenAddress", ()=>shortenAddress);
 const shortenAddress = (longAddress)=>{
-    let firstPart = longAddress.substring(0, 5);
-    let lastPart = longAddress.substring(longAddress.length - 5, longAddress.length);
-    let result = `${firstPart}...${lastPart}`;
-    console.log("in shorten address", result);
-    return `Connected wallet: ${result}`;
+    console.log("in shorten address", longAddress);
+    if (longAddress !== null || longAddress !== undefined) {
+        let firstPart = longAddress.substring(0, 5);
+        let lastPart = longAddress.substring(longAddress.length - 5, longAddress.length);
+        let result = `${firstPart}...${lastPart}`;
+        console.log("in shorten address", result);
+        return `Connected wallet: ${result}`;
+    }
+    return "DISCONNECTED";
 };
 exports.default = shortenAddress;
 

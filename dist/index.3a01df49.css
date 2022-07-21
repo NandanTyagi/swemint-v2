@@ -193,6 +193,7 @@ footer {
 
 .nav-footer {
   min-width: 320px;
+  width: 100%;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;

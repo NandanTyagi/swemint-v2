@@ -1,5 +1,6 @@
 // import { appId, serverUrl } from "../.secret";
 import { getAllOwners } from "../scripts/ratelimit";
+import shortenAddress from "../utility/shortenAddress";
 
 const initDashboard = async () => {
   
@@ -8,6 +9,8 @@ const initDashboard = async () => {
   const appId = "dsGPCxn9M5fRH1VVOysTr2Z5dtdLwxq4XOmMbkZH";
   const contractAddress = "0x7AEdebd30538116668e006a9572386F288647cCC";
   const chain = "rinkeby";
+
+  const msg = document.getElementById("msg");
   
   async function getNFTs() {
     // console.log("In Dashboard");
@@ -16,6 +19,7 @@ const initDashboard = async () => {
     let currentUser = Moralis.User.current();
     let currentAddress = currentUser.get("ethAddress");
     console.log("CurrentEth Address", currentAddress);
+    showConnectedWallet(currentUser)
   
     if (!currentUser) {
       currentUser = await Moralis.Web3.authenticate();
@@ -122,6 +126,12 @@ const initDashboard = async () => {
       })
       return amount
    
+  }
+  function showConnectedWallet(_user) {
+    if(_user !== null || _user !== undefined){
+      msg.innerText = shortenAddress(_user.get('ethAddress'));
+      msg.style.visibility = "visible"
+    }
   }
 
   getNFTs()

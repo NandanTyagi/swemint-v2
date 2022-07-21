@@ -532,14 +532,18 @@ function hmrAcceptRun(bundle, id) {
 }
 
 },{}],"cdWvR":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 // import { appId, serverUrl } from "../.secret";
 var _ratelimit = require("../scripts/ratelimit");
+var _shortenAddress = require("../utility/shortenAddress");
+var _shortenAddressDefault = parcelHelpers.interopDefault(_shortenAddress);
 const initDashboard = async ()=>{
     // Rinkeby testnet server on Moralis
     const serverUrl = "https://zjaux8t7jfje.usemoralis.com:2053/server";
     const appId = "dsGPCxn9M5fRH1VVOysTr2Z5dtdLwxq4XOmMbkZH";
     const contractAddress = "0x7AEdebd30538116668e006a9572386F288647cCC";
     const chain = "rinkeby";
+    const msg = document.getElementById("msg");
     async function getNFTs() {
         // console.log("In Dashboard");
         Moralis.start({
@@ -549,6 +553,7 @@ const initDashboard = async ()=>{
         let currentUser = Moralis.User.current();
         let currentAddress = currentUser.get("ethAddress");
         console.log("CurrentEth Address", currentAddress);
+        showConnectedWallet(currentUser);
         if (!currentUser) currentUser = await Moralis.Web3.authenticate();
         const options = {
             address: contractAddress,
@@ -632,11 +637,17 @@ const initDashboard = async ()=>{
         });
         return amount;
     }
+    function showConnectedWallet(_user) {
+        if (_user !== null || _user !== undefined) {
+            msg.innerText = (0, _shortenAddressDefault.default)(_user.get("ethAddress"));
+            msg.style.visibility = "visible";
+        }
+    }
     getNFTs();
 };
 document.addEventListener("DOMContentLoaded", ()=>initDashboard());
 
-},{"../scripts/ratelimit":"hrHuP"}],"hrHuP":[function(require,module,exports) {
+},{"../scripts/ratelimit":"hrHuP","../utility/shortenAddress":"1QPnu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hrHuP":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getAllOwners", ()=>getAllOwners);
@@ -726,6 +737,23 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}]},["65vpK","cdWvR"], "cdWvR", "parcelRequireee82")
+},{}],"1QPnu":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "shortenAddress", ()=>shortenAddress);
+const shortenAddress = (longAddress)=>{
+    console.log("in shorten address", longAddress);
+    if (longAddress !== null || longAddress !== undefined) {
+        let firstPart = longAddress.substring(0, 5);
+        let lastPart = longAddress.substring(longAddress.length - 5, longAddress.length);
+        let result = `${firstPart}...${lastPart}`;
+        console.log("in shorten address", result);
+        return `Connected wallet: ${result}`;
+    }
+    return "DISCONNECTED";
+};
+exports.default = shortenAddress;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["65vpK","cdWvR"], "cdWvR", "parcelRequireee82")
 
 //# sourceMappingURL=dashboard.2c9eccd5.js.map

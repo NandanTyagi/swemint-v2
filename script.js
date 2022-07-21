@@ -1,7 +1,7 @@
-
 import shortenAddress from "./utility/shortenAddress";
 
 const init = async () => {
+  console.log('Window Eth',window.ethereum.selectedAddress)
   const countdown = document.getElementById("countdown");
   if(!countdown) return
   const days = document.getElementById("days");
@@ -52,10 +52,11 @@ const chain = "rinkeby";
 
   Moralis.start({ serverUrl, appId });
 
-  let user = Moralis.User.current();
+  let user = await Moralis.User.current();
+  const connectedWallet = user.get('ethAddress')
 
-  if (user) {
-    console.log("logged in user: ", user);
+  if (user && connectedWallet !== null) {
+    console.log("logged in user: ", connectedWallet);
     btn.innerText = "Disconnect wallet";
   }
 
@@ -64,7 +65,7 @@ const chain = "rinkeby";
     // err.style.visibility = "hidden";
     if (!user) {
       user = await Moralis.authenticate({
-        signingMessage: "Log in using Moralis",
+        signingMessage: "Log in to Swemint.io",
       })
         .then(function (user) {
           console.log("logged in user:", user);
@@ -85,34 +86,6 @@ const chain = "rinkeby";
     }
   }
   
-
-  async function loginWalletConnect() {
-    err.innerHTML = "";
-    let user = Moralis.User.current();
-    if (!user) {
-      const user = await Moralis.authenticate({
-        provider: "walletconnect",
-        mobileLinks: [
-          "rainbow",
-          "metamask",
-          "argent",
-          "trust",
-          // "imtoken",
-          // "pillar",
-        ],
-        signingMessage: "Log in using Moralis",
-      })
-        .then(function (user) {
-          console.log("logged in user:", user);
-          console.log(user.get("ethAddress"));
-        })
-        .catch(function (error) {
-          console.log(error);
-          err.innerHTML = error.message;
-        });
-    }
-  }
-
   async function logOut() {
     await Moralis.User.logOut();
     console.log("logged out");
@@ -131,8 +104,48 @@ const chain = "rinkeby";
       logOut()
     }
   }
+
+  function showConnectedWallet() {
+    
+    if(user !== null  && user !== undefined){
+      msg.innerText = shortenAddress(user.get('ethAddress'));
+      msg.style.visibility = "visible"
+    }
+  }
+
+  showConnectedWallet()
   
   btn.addEventListener("pointerup", () => connectionCheck());
+
+
 };
 
 document.addEventListener("DOMContentLoaded", () => init());
+
+
+  // async function loginWalletConnect() {
+  //   err.innerHTML = "";
+  //   let user = Moralis.User.current();
+  //   if (!user) {
+  //     const user = await Moralis.authenticate({
+  //       provider: "walletconnect",
+  //       mobileLinks: [
+  //         "rainbow",
+  //         "metamask",
+  //         "argent",
+  //         "trust",
+  //         // "imtoken",
+  //         // "pillar",
+  //       ],
+  //       signingMessage: "Log in using Moralis",
+  //     })
+  //       .then(function (user) {
+  //         console.log("logged in user:", user);
+  //         console.log(user.get("ethAddress"));
+  //       })
+  //       .catch(function (error) {
+  //         console.log(error);
+  //         err.innerHTML = error.message;
+  //       });
+  //   }
+  // }
