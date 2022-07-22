@@ -10,6 +10,13 @@ Moralis.start({ serverUrl, appId });
 let user = Moralis.User.current();
 
 // Authorize
-if (!access(user.get("ethAddress"))) {
+try {
+  if (!access(user.get("ethAddress"))) {
+    window.location.pathname = "/index.html";
+  }
+  
+} catch (error) {
+  console.log(error)
+  alert("Sorry you are not authorized to to view this content")
   window.location.pathname = "/index.html";
 }

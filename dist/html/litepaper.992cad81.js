@@ -545,7 +545,13 @@ Moralis.start({
 });
 let user = Moralis.User.current();
 // Authorize
-if (!(0, _accessDefault.default)(user.get("ethAddress"))) window.location.pathname = "/index.html";
+try {
+    if (!(0, _accessDefault.default)(user.get("ethAddress"))) window.location.pathname = "/index.html";
+} catch (error) {
+    console.log(error);
+    alert("Sorry you are not authorized to to view this content");
+    window.location.pathname = "/index.html";
+}
 
 },{"../utility/access":"eIzdR","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eIzdR":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
