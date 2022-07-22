@@ -537,11 +537,13 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _ratelimit = require("../scripts/ratelimit");
 var _shortenAddress = require("../utility/shortenAddress");
 var _shortenAddressDefault = parcelHelpers.interopDefault(_shortenAddress);
+var _access = require("../utility/access");
+var _accessDefault = parcelHelpers.interopDefault(_access);
 const initDashboard = async ()=>{
     // Rinkeby testnet server on Moralis
     const serverUrl = "https://zjaux8t7jfje.usemoralis.com:2053/server";
     const appId = "dsGPCxn9M5fRH1VVOysTr2Z5dtdLwxq4XOmMbkZH";
-    const contractAddress = "0x7AEdebd30538116668e006a9572386F288647cCC";
+    const contractAddress = "0x15e86f1898d843c339a99e88673cbb3310f992f2";
     const chain = "rinkeby";
     const msg = document.getElementById("msg");
     async function getNFTs() {
@@ -553,6 +555,8 @@ const initDashboard = async ()=>{
         let currentUser = Moralis.User.current();
         let currentAddress = currentUser.get("ethAddress");
         console.log("CurrentEth Address", currentAddress);
+        // Authorize
+        if (!(0, _accessDefault.default)(currentAddress)) window.location.pathname = "/index.html";
         showConnectedWallet(currentUser);
         if (!currentUser) currentUser = await Moralis.Web3.authenticate();
         const options = {
@@ -565,8 +569,8 @@ const initDashboard = async ()=>{
         console.log("Got token owners", owners);
         let nftsWithOwners = await addOwnersToNft(await owners, await NFTs);
         let nftMetadata = await fetchNftMetadata(await NFTs.result);
-    // console.log("nfts metadata", nftMetadata);
-    // renderInventory(await NFTs, currentAddress);
+        // console.log("nfts metadata", nftMetadata);
+        renderInventory(await NFTs, currentAddress);
     }
     function fetchNftMetadata(nfts) {
         let promises = [];
@@ -601,15 +605,17 @@ const initDashboard = async ()=>{
     }
     async function renderInventory(nfts, curAddr) {
         const parent = document.getElementById("app");
-        // console.log('Rendered nfts',nfts)
+        console.log("Rendered nfts", nfts);
         for(let i = 0; i < nfts.total; i++){
             const nft = await nfts.result[i];
-            // console.log('Metadata attributes',nft.metadata.attributes)
+            console.log("Metadata attributes", nft.metadata.attributes);
             console.log("Rendered nft", nft);
             let htmlString = `
       <div class="card">
+        <div class="card-image__overlay"></div>
         <img src="${nft.metadata.image}" class="card-img-top" alt="...">
         <div class="card-body">
+          <div class="card-body__overlay"></div>
           <h5 class="card-title">${nft.metadata.name}</h5>
           <p class="card-text">${nft.metadata.description}</p>
           <p class="card-text">Token ID: ${nft.token_id}</p>
@@ -617,12 +623,12 @@ const initDashboard = async ()=>{
           <p class="card-text">Holders: ${await nft.owners.length}</p>
           <p class="card-text">Held by you: ${await getOwnedAmount(nft, curAddr)}</p>
           <a href="https://testnets.opensea.io/assets/rinkeby/${contractAddress}/${nft.token_id}" class="btn btn-primary">View on Opensea</a>
-          <a href="../html/mint.html" class="btn btn-primary">Mint</a>
+          <a href="../html/mint.html/?nftId=${nft.token_id}" class="btn btn-primary">Mint</a>
           </div>
           </div>
           `;
-            let col = document.createElement("div");
-            col.classname = "col col-md-4";
+            let col = document.createElement("article");
+            col.className = "col col-md-4";
             col.innerHTML = htmlString;
             parent.appendChild(col);
         }
@@ -647,14 +653,14 @@ const initDashboard = async ()=>{
 };
 document.addEventListener("DOMContentLoaded", ()=>initDashboard());
 
-},{"../scripts/ratelimit":"hrHuP","../utility/shortenAddress":"1QPnu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hrHuP":[function(require,module,exports) {
+},{"../scripts/ratelimit":"hrHuP","../utility/shortenAddress":"1QPnu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../utility/access":"eIzdR"}],"hrHuP":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getAllOwners", ()=>getAllOwners);
 async function getAllOwners(token_id) {
     const serverUrl = "https://zjaux8t7jfje.usemoralis.com:2053/server";
     const appId = "dsGPCxn9M5fRH1VVOysTr2Z5dtdLwxq4XOmMbkZH";
-    const contractAddress = "0x7AEdebd30538116668e006a9572386F288647cCC";
+    const contractAddress = "0x15e86f1898d843c339a99e88673cbb3310f992f2";
     const chain = "rinkeby";
     await Moralis.start({
         serverUrl,
@@ -753,6 +759,32 @@ const shortenAddress = (longAddress)=>{
     return "DISCONNECTED";
 };
 exports.default = shortenAddress;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eIzdR":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "access", ()=>access);
+function access(address) {
+    const whiteList = [];
+    let isWhitelisted = false;
+    whiteList.push("0xf3772dD9B10D46dE9Cd7d5aAbf64712477987418");
+    whiteList.push("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266");
+    whiteList.push("0x830AcAD3D82f41435918767fa7995A8c5b6523aD");
+    whiteList.map((wlAddress, i)=>{
+        if (wlAddress.toUpperCase() === address.toUpperCase()) isWhitelisted = true;
+        return isWhitelisted;
+    });
+    if (isWhitelisted) {
+        console.log("Welcome you are whitelisted");
+        alert("Welcome you are whitelisted");
+        return true;
+    } else {
+        console.log("Sorry you are not authorized to view content");
+        alert("Sorry you are not authorized to view content");
+        return false;
+    }
+}
+exports.default = access;
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["65vpK","cdWvR"], "cdWvR", "parcelRequireee82")
 

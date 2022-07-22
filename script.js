@@ -1,7 +1,7 @@
 import shortenAddress from "./utility/shortenAddress";
 
 const init = async () => {
-  console.log('Window Eth',window.ethereum.selectedAddress)
+  // console.log('Window Eth',window.ethereum.selectedAddress)
   const countdown = document.getElementById("countdown");
   if(!countdown) return
   const days = document.getElementById("days");
@@ -46,7 +46,7 @@ const init = async () => {
   // const appId = "b6IxjhUZhcj7B3Y1TxRcyKGVPqICIlr4rDVVlTZ4";
   const serverUrl = "https://zjaux8t7jfje.usemoralis.com:2053/server";
 const appId = "dsGPCxn9M5fRH1VVOysTr2Z5dtdLwxq4XOmMbkZH";
-const contractAddress = "0x7AEdebd30538116668e006a9572386F288647cCC";
+const contractAddress = "0x15e86f1898d843c339a99e88673cbb3310f992f2";
 const chain = "rinkeby";
 
 

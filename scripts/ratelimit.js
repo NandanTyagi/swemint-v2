@@ -1,7 +1,7 @@
 export async function getAllOwners(token_id) {
   const serverUrl = "https://zjaux8t7jfje.usemoralis.com:2053/server";
   const appId = "dsGPCxn9M5fRH1VVOysTr2Z5dtdLwxq4XOmMbkZH";
-  const contractAddress = "0x7AEdebd30538116668e006a9572386F288647cCC";
+  const contractAddress = "0x15e86f1898d843c339a99e88673cbb3310f992f2";
   const chain = "rinkeby";
   await Moralis.start({ serverUrl, appId });
   let cursor = null;
