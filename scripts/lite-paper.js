@@ -17,6 +17,6 @@ try {
   
 } catch (error) {
   console.log(error)
-  alert("Sorry you are not authorized to to view this content")
+  alert("Sorry you are not authorized to view this content")
   window.location.pathname = "/index.html";
 }
